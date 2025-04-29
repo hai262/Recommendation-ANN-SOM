@@ -136,10 +136,12 @@ else:
                     model, history = train_autoencoder(X_train, latent_dim, epochs, batch_size)
                     st.session_state['autoencoder_model'] = model
                 st.success("Autoencoder trained!")
+                
+                # Capture and display model summary properly
                 buf = io.StringIO()
                 model.summary(print_fn=lambda x: buf.write(x + "\n"))
-                st.text("Model Architecture and Parameters:")
-                st.text(buf.getvalue())
+                st.markdown("**Model Architecture and Parameters:**")
+                st.code(buf.getvalue(), language='text')
                 fig2, ax2 = plt.subplots(figsize=(4,3))
                 ax2.plot(history.history['loss'], label='Train')
                 ax2.plot(history.history['val_loss'], label='Val')
